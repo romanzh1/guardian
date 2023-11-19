@@ -3,75 +3,65 @@ package main
 import (
 	"context"
 	"log"
-	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 
 	"github.com/caarlos0/env"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/romanzh1/guardian/backend/internal/handlers"
+	"github.com/romanzh1/guardian/backend/internal/models"
+	"github.com/romanzh1/guardian/backend/internal/repository"
+	"github.com/romanzh1/guardian/backend/internal/usecase"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-type Config struct {
-	Port string `env:"PORT"`
-}
-
 func main() {
-	config := zap.NewDevelopmentConfig()
-	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
-	logger, err := config.Build()
+	logger, err := initLogger()
 	if err != nil {
 		log.Fatalf("Failed to initialize logger: %v", err)
-		return
 	}
 	defer logger.Sync()
 
-	zap.ReplaceGlobals(logger)
-
-	cfg := Config{}
+	cfg := models.Config{}
 	if err := env.Parse(&cfg); err != nil {
 		zap.S().Fatalf("env parse: %s", err)
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
+	ctx := context.Background()
+
+	mongoDB, err := repository.NewMongoDB(ctx, cfg.GetMongo())
+
+	useCase := usecase.NewUseCase(mongoDB)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
-	h := handlers.NewHandler(r)
-	h.Main()
+	//Необходимо создать и заполнить базу данных для менеджера паролей тестовыми, но реалистичными данными.
+	//	Создай базу данных с 3 таблицами и заполни их
+	//Таблица passwords: email, name, username, website
+	//Таблица
 
-	server := &http.Server{
-		Addr:           ":" + cfg.Port,
-		Handler:        r,
-		ReadTimeout:    20 * time.Second,
-		WriteTimeout:   20 * time.Second,
-		MaxHeaderBytes: 1 << 20,
-	}
-
-	go func() {
-		if err := server.ListenAndServe(); err != nil {
-			zap.S().Fatalf("serve: %s", err)
-		}
-	}()
-
-	zap.S().Infof("Application start on %s port", cfg.Port)
+	h := handlers.NewHandler(r, useCase)
+	h.InitializeHandlers()
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
-	<-quit
 
-	zap.S().Info("Server shutting down...")
+	h.StartServe(ctx, cfg.GetServer(), quit)
+}
 
-	if err := server.Shutdown(ctx); err != nil {
-		zap.S().Errorf("Server forced to shutdown: %s", err)
+func initLogger() (*zap.Logger, error) {
+	config := zap.NewDevelopmentConfig()
+	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
+	logger, err := config.Build()
+	if err != nil {
+		return nil, err
 	}
 
-	zap.S().Info("Server exiting")
+	zap.ReplaceGlobals(logger)
+
+	return logger, nil
 }
