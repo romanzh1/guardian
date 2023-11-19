@@ -1,0 +1,143 @@
+[{
+	"email": "john@example.com",
+	"username": "John Smith",
+	"password": "pass123",
+	"websites": [
+		"https://www.example.com/",
+		"https://www.example.org/"
+	]
+},
+{
+	"email": "alice@gmail.com",
+	"username": "Alice Johnson",
+	"password": "secret@123",
+	"websites": [
+		"https://mail.google.com/",
+		"https://www.youtube.com/"
+	]
+},
+{
+	"email": "bob@yahoo.com",
+	"username": "Bob Anderson",
+	"password": "securePwd42",
+	"websites": [
+		"https://mail.yahoo.com/",
+		"https://www.linkedin.com/"
+	]
+},
+{
+	"email": "emily@hotmail.com",
+	"username": "Emily White",
+	"password": "p@ssW0rd!",
+	"websites": [
+		"https://outlook.live.com/",
+		"https://www.facebook.com/"
+	]
+},
+{
+	"email": "david@outlook.com",
+	"username": "David Brown",
+	"password": "brown1234",
+	"websites": [
+		"https://outlook.live.com/",
+		"https://www.twitter.com/"
+	]
+}
+,
+{
+	"email": "susan@gmail.com",
+	"username": "Susan Miller",
+	"password": "susanPass",
+	"websites": [
+		"https://mail.google.com/",
+		"https://www.instagram.com/"
+	]
+},
+{
+	"email": "charlie@yahoo.com",
+	"username": "Charlie Davis",
+	"password": "ch@rliePass",
+	"websites": [
+		"https://mail.yahoo.com/",
+		"https://www.reddit.com/"
+	]
+},
+{
+	"email": "olivia@hotmail.com",
+	"username": "Olivia Thomas",
+	"password": "oliviaPwd",
+	"websites": [
+		"https://outlook.live.com/",
+		"https://www.pinterest.com/"
+	]
+},
+{
+	"email": "alex@gmail.com",
+	"username": "Alex Johnson",
+	"password": "a1eX#pass",
+	"websites": [
+		"https://mail.google.com/",
+		"https://www.amazon.com/"
+	]
+},
+{
+	"email": "grace@yahoo.com",
+	"username": "Grace Wilson",
+	"password": "gracePwd42",
+	"websites": [
+		"https://mail.yahoo.com/",
+		"https://www.netflix.com/"
+	]
+}
+,
+{
+	"email": "henry@hotmail.com",
+	"username": "Henry Lee",
+	"password": "h@nry123",
+	"websites": [
+		"https://outlook.live.com/",
+		"https://www.linkedin.com/"
+	]
+}
+,
+{
+	"email": "lily@gmail.com",
+	"username": "Lily Turner",
+	"password": "turnerPwd",
+	"websites": [
+		"https://mail.google.com/",
+		"https://www.youtube.com/"
+	]
+}
+,
+{
+	"email": "michael@yahoo.com",
+	"username": "Michael White",
+	"password": "mikePass",
+	"websites": [
+		"https://mail.yahoo.com/",
+		"https://www.instagram.com/"
+	]
+}
+,{
+	"email": "ava@hotmail.com",
+	"username": "Ava Moore",
+	"password": "moorePwd",
+	"websites": [
+		"https://outlook.live.com/",
+		"https://www.facebook.com/"
+	]
+}
+
+,
+{
+	"email": "noah@gmail.com",
+	"username": "Noah Adams",
+	"password": "adamsPwd",
+	"websites": [
+		"https://mail.google.com/",
+		"https://www.twitter.com/"
+	]
+}
+
+]
