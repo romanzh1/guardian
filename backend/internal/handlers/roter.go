@@ -57,7 +57,7 @@ func (h handler) handleError(w http.ResponseWriter, r *http.Request, err error) 
 
 	response := errorResponse{
 		Error:      err.Error(),
-		StatusCode: http.StatusInternalServerError,
+		StatusCode: http.StatusUnauthorized,
 	}
 
 	zap.S().Errorf("handler error: %s", err)
