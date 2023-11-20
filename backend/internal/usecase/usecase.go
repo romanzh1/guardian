@@ -7,6 +7,7 @@ import (
 )
 
 type repositoryPassManager interface {
+	GetUser(ctx context.Context, id string) (models.User, error)
 	GetAccount(ctx context.Context, id string) (models.EntireAccount, error)
 	GetAccounts(ctx context.Context) ([]models.Account, error)
 }
@@ -17,6 +18,10 @@ type useCase struct {
 
 func NewUseCase(repo repositoryPassManager) useCase {
 	return useCase{repo: repo}
+}
+
+func (u useCase) GetUser(ctx context.Context, id string) (models.User, error) {
+	return u.repo.GetUser(ctx, id)
 }
 
 func (u useCase) GetAccounts(ctx context.Context) ([]models.Account, error) {
