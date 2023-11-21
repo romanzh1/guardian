@@ -12,16 +12,16 @@ import (
 	"go.uber.org/zap"
 )
 
-type handler struct {
+type Handler struct {
 	router  *chi.Mux
 	useCase useCasePassManager
 }
 
-func NewHandler(r *chi.Mux, uc useCasePassManager) handler {
-	return handler{router: r, useCase: uc}
+func NewHandler(r *chi.Mux, uc useCasePassManager) Handler {
+	return Handler{router: r, useCase: uc}
 }
 
-func (h handler) StartServe(ctx context.Context, cfg models.ServerConfig, quit chan os.Signal) {
+func (h Handler) StartServe(ctx context.Context, cfg models.ServerConfig, quit chan os.Signal) {
 	server := &http.Server{
 		Addr:           ":" + cfg.Port,
 		Handler:        h.router,
@@ -49,7 +49,7 @@ func (h handler) StartServe(ctx context.Context, cfg models.ServerConfig, quit c
 	zap.S().Info("Server exiting")
 }
 
-func (h handler) handleError(w http.ResponseWriter, r *http.Request, err error) {
+func (h Handler) handleError(w http.ResponseWriter, r *http.Request, err error) {
 	type errorResponse struct {
 		Error      string `json:"error"`
 		StatusCode int    `json:"-"`
@@ -60,7 +60,7 @@ func (h handler) handleError(w http.ResponseWriter, r *http.Request, err error) 
 		StatusCode: http.StatusUnauthorized,
 	}
 
-	zap.S().Errorf("handler error: %s", err)
+	zap.S().Errorf("Handler error: %s", err)
 
 	render.Status(r, response.StatusCode)
 	render.JSON(w, r, response)
