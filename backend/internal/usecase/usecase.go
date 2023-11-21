@@ -12,22 +12,22 @@ type repositoryPassManager interface {
 	GetAccounts(ctx context.Context) ([]models.Account, error)
 }
 
-type useCase struct {
+type UseCase struct {
 	repo repositoryPassManager
 }
 
-func NewUseCase(repo repositoryPassManager) useCase {
-	return useCase{repo: repo}
+func NewUseCase(repo repositoryPassManager) UseCase {
+	return UseCase{repo: repo}
 }
 
-func (u useCase) GetUser(ctx context.Context, id string) (models.User, error) {
+func (u UseCase) GetUser(ctx context.Context, id string) (models.User, error) {
 	return u.repo.GetUser(ctx, id)
 }
 
-func (u useCase) GetAccounts(ctx context.Context) ([]models.Account, error) {
+func (u UseCase) GetAccounts(ctx context.Context) ([]models.Account, error) {
 	return u.repo.GetAccounts(ctx)
 }
 
-func (u useCase) GetAccount(ctx context.Context, id string) (models.EntireAccount, error) {
+func (u UseCase) GetAccount(ctx context.Context, id string) (models.EntireAccount, error) {
 	return u.repo.GetAccount(ctx, id)
 }

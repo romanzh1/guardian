@@ -15,7 +15,7 @@ type useCasePassManager interface {
 	GetAccounts(ctx context.Context) ([]models.Account, error)
 }
 
-func (h handler) InitializeHandlers() http.Handler {
+func (h Handler) InitializeHandlers() http.Handler {
 	h.router.Route("/api", func(r chi.Router) {
 		r.Get("/", h.Main)
 		r.Get("/accounts", h.GetAccounts)
@@ -27,11 +27,11 @@ func (h handler) InitializeHandlers() http.Handler {
 	return h.router
 }
 
-func (h handler) Main(w http.ResponseWriter, r *http.Request) {
+func (h Handler) Main(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, "Welcome to the club")
 }
 
-func (h handler) GetUser(w http.ResponseWriter, r *http.Request) {
+func (h Handler) GetUser(w http.ResponseWriter, r *http.Request) {
 	user, err := h.useCase.GetUser(r.Context(), chi.URLParam(r, "id"))
 	if err != nil {
 		h.handleError(w, r, err)
@@ -41,7 +41,7 @@ func (h handler) GetUser(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, user)
 }
 
-func (h handler) GetAccount(w http.ResponseWriter, r *http.Request) {
+func (h Handler) GetAccount(w http.ResponseWriter, r *http.Request) {
 	account, err := h.useCase.GetAccount(r.Context(), chi.URLParam(r, "id"))
 	if err != nil {
 		h.handleError(w, r, err)
@@ -51,7 +51,7 @@ func (h handler) GetAccount(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, account)
 }
 
-func (h handler) GetAccounts(w http.ResponseWriter, r *http.Request) {
+func (h Handler) GetAccounts(w http.ResponseWriter, r *http.Request) {
 	accounts, err := h.useCase.GetAccounts(r.Context())
 	if err != nil {
 		h.handleError(w, r, err)
