@@ -1,0 +1,43 @@
+.root {
+}
+.content{
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: var(--mui-palette-createIssueHeader-text);
+  min-height: 36px;
+  padding: 0 16px;
+
+  &:hover,
+  &_active {
+    background: var(--mui-palette-background-defaultChannel);
+    color: var(--mui-palette-primary-main);
+    text-decoration: none;
+  }
+}
+
+.iconWrapper {
+  padding: 0 16px 0 0;
+}
+
+.title {
+  flex-grow: 1;
+}
+.navigation {
+  padding: 4px;
+}
+.elements{
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  padding: 4px;
+  border-left: 1px solid var(--mui-palette-adminSidebar-border);
+}

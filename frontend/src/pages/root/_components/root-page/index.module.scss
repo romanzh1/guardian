@@ -1,0 +1,24 @@
+.root{
+  padding: 20px 40px 0 40px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+.content {
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr 50px;
+  align-items: start;
+  gap: 16px;
+
+}
+
+.table{
+}
+
+.button{
+
+}

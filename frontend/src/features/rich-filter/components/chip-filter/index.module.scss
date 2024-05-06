@@ -1,0 +1,21 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.chipBlock {
+  display: flex;
+  gap: 1px;
+}
+
+.label {
+  height: 24px;
+  padding: 4px;
+  border: none;
+  outline: none;
+  white-space: nowrap;
+}
+.operator {
+  width: auto;
+}

@@ -1,0 +1,33 @@
+.root {
+  display: flex;
+}
+.search {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 8px;
+  position: relative;
+  width: 100%;
+  cursor: text;
+  flex-wrap: wrap;
+  min-height: 24px;
+}
+
+.icons {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  right: 16px;
+  gap: 8px;
+}
+.input {
+  fieldset {
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+  input {
+    padding: 0px 14px 0px 0px;
+  }
+}

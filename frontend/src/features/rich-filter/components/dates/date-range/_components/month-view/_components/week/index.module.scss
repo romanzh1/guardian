@@ -1,0 +1,51 @@
+.root {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(32px, 1fr));
+  grid-template-rows: repeat(auto-fill, 32px);
+}
+
+.weekSlideTransition {
+  height: 100%;
+}
+
+.day {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .dayInner {
+    width: 100%;
+    height: calc(100% - 4px);
+
+    &_selectedSingle {
+      border-radius: 28px;
+      width: calc(100% - 4px);
+    }
+
+    &_selectedFirst {
+      border-radius: 28px 0 0 28px;
+    }
+
+    &_selectedLast {
+      border-radius: 0 28px 28px 0;
+    }
+
+    &_selectedMiddle {
+      width: 100%;
+    }
+  }
+}
+
+.dayNumber {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &_today {
+    border-radius: 50%;
+  }
+}

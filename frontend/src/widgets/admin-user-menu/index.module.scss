@@ -1,0 +1,23 @@
+.root {}
+
+.userIcon{
+  display: flex;
+  gap: 4px
+}
+
+.icon {
+  position: relative;
+}
+.userInfo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.preloader {
+  left: calc(50% - 12px);
+  position: absolute;
+  top: calc(50% - 12px);
+}
+
+

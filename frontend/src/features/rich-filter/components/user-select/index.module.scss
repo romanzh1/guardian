@@ -1,0 +1,24 @@
+.root {
+  position: relative;
+  z-index: 11;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input {
+  fieldset {
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+  input {
+    padding-left: 0;
+  }
+}
+.paper {
+  padding: 8px;
+  border-radius: 8px;
+}

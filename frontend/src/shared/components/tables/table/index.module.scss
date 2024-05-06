@@ -1,0 +1,24 @@
+.root {
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 100%;
+
+  &_fixContent {
+    width: min-content;
+    min-width: 500px;
+  }
+
+  &_isLoading {
+    position: relative;
+  }
+}
+
+.container {
+  &_isScroll {
+    max-height: calc(100vh - 270px);
+  }
+}
+
+.fixedLayout {
+  table-layout: fixed;
+}

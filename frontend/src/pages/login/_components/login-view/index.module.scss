@@ -1,0 +1,32 @@
+.root{
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  width: 100vw;
+}
+
+.logo{
+  display: flex;
+  align-items: center;
+  padding-bottom: 16px;
+}
+
+.formWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 290px;
+  padding: 16px;
+}
+
+.info{
+  display: flex;
+  flex: 2 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.img{
+  width: 100px;
+  height: 100px;
+}
