@@ -1,0 +1,19 @@
+.root {
+  width: 100%;
+  display: flex;
+}
+
+.moreButton {
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--mui-palette-tabs-background);
+  border: none;
+  cursor: pointer;
+  padding: 4px 16px;
+  border-radius: 0 var(--mui-properties-borderRadius) var(--mui-properties-borderRadius) 0;
+  box-sizing: border-box;
+}
+
+.icon {
+  color: var(--mui-palette-secondary-main);
+}

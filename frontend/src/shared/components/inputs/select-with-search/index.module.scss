@@ -1,0 +1,11 @@
+.root {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.preloader {
+  left: calc(50% - 12px);
+  position: absolute;
+  top: calc(50% - 12px);
+}

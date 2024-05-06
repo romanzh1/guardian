@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list {
+  position: relative;
+  z-index: 11;
+}
+
+.listBlock {
+  padding: 8px;
+}
+.listBlockItems{
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.input {
+  fieldset {
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+  input {
+    padding: 0px 14px 0px 0px;
+  }
+}

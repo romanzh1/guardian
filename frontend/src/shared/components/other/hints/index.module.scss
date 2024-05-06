@@ -1,0 +1,16 @@
+.root{
+  display: flex;
+  align-items: center;
+}
+.box{
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.hint{
+  max-width: 330px;
+  background: var(--mui-palette-gradientInput-background);
+  padding: 8px;
+  box-sizing: border-box;
+}

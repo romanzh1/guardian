@@ -1,0 +1,13 @@
+.root {
+  &_clickable {
+    cursor: pointer;
+  }
+}
+
+.details {
+  transition: 0.2s;
+  transform: rotate(-90deg);
+  &_isOpen {
+    transform: rotate(0deg);
+  }
+}

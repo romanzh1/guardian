@@ -1,0 +1,23 @@
+.root {}
+
+.iconBox {
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+.cellInner {
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+
+  &_empty {
+    justify-content: flex-end;
+  }
+}
+
+.sortLabel {
+  :global(.MuiSvgIcon-root) {
+    margin: 0;
+  }
+}

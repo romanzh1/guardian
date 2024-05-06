@@ -1,0 +1,17 @@
+.container {
+  padding: 8px;
+}
+.title {
+  text-align: left;
+  background-color: var(--mui-palette-issueTransition-info-background);
+  border-radius: 8px 8px 0 0;
+  padding: 10px;
+}
+.actions {
+  display: flex;
+  gap: 16px;
+  padding-top: 8px;
+}
+.text {
+  padding: 8px 0;
+}

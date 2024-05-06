@@ -1,0 +1,16 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.input {
+  fieldset {
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+  input {
+    padding: 8px 14px 8px 0px;
+  }
+  width: 220px;
+}

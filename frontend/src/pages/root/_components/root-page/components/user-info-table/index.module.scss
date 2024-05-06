@@ -1,0 +1,9 @@
+.root{
+    border: 1px solid var(--mui-palette-listItem-border);
+}
+
+.row{
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    align-items: center;
+}
