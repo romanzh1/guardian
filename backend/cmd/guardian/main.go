@@ -34,17 +34,20 @@ func main() {
 
 	mongoDB, err := repository.NewMongoDB(ctx, cfg.GetMongo())
 
-	useCase := usecase.NewUseCase(mongoDB)
+	accountRepo := repository.NewAccount(mongoDB)
+	secureNoteRepo := repository.NewSecureNote(mongoDB)
+	userRepo := repository.NewUser(mongoDB)
+
+	accountUC := usecase.NewAccount(accountRepo)
+	secureNoteUC := usecase.NewSecureNote(secureNoteRepo)
+	userUC := usecase.NewUser(userRepo)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+	//r.Use(middleware.StripSlashes)
 
-	//Необходимо создать и заполнить базу данных для менеджера паролей тестовыми, но реалистичными данными.
-	//	Создай базу данных с 3 таблицами и заполни их
-	//Таблица passwords: email, name, username, website
-	//Таблица
-
-	h := handlers.NewHandler(r, useCase)
+	h := handlers.NewHandlers(r, accountUC, secureNoteUC, userUC)
+	h.AllowCORS()
 	h.InitializeHandlers()
 
 	quit := make(chan os.Signal, 1)
@@ -56,7 +59,8 @@ func main() {
 func initLogger() (*zap.Logger, error) {
 	config := zap.NewDevelopmentConfig()
 	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
-	logger, err := config.Build()
+	config.DisableStacktrace = true
+	logger, err := config.Build(zap.AddCaller())
 	if err != nil {
 		return nil, err
 	}
