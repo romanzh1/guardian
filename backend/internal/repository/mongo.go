@@ -24,3 +24,11 @@ func NewMongoDB(ctx context.Context, cfg models.MongoConfig) (DB, error) {
 
 	return DB{db: client.Database(cfg.MongoDatabase)}, nil
 }
+
+func (r DB) Close() error {
+	if err := r.db.Client().Disconnect(context.Background()); err != nil {
+		return fmt.Errorf("disconnect: %w", err)
+	}
+
+	return nil
+}
