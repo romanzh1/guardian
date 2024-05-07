@@ -1,12 +1,8 @@
-export * as categoryUnit from './category-unit';
 export * as tag from './tag';
-export * as configUnit from './config-unit';
 export * as service from './service';
-export * as serviceConfigUnit from './service-config-unit';
 export * as serviceType from './service-type';
 export * as guardian from './guardian';
 
-export * from './use-get-direction';
 export * from './use-get-global-role-list';
 export * from './use-get-passport-personal-data';
 export * from './use-get-profile';
@@ -15,9 +11,6 @@ export * from './use-get-owner';
 export * from './use-get-profile-list';
 export * from './use-get-group-list';
 export * from './use-get-group';
-export * from './use-get-service-role-list';
-export * from './use-get-service-role';
 export * from './use-get-service-user-list';
 export * from './use-get-service-user-group-list';
-export * from './use-get-direction-list';
 export * from './use-get-service-user';
