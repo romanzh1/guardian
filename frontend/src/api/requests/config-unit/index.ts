@@ -1,9 +1,0 @@
-export * as get from './get';
-export * as getList from './get-list';
-export * as put from './put';
-export * as post from './post';
-export * as patchConsumers from './patch-consumers';
-export * as putProvider from './put-provider';
-export * as postLoad from './post-load';
-export * as getChildrenList from './get-children-list';
-export * as getHistory from './get-history';
