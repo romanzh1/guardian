@@ -2,8 +2,8 @@ import { memo, useCallback, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import EditOffOutlinedIcon from '@mui/icons-material/EditOffOutlined';
 import styles from './index.module.scss';
-import { UserInfoTable } from './components/user-info-table';
-import { UserInfoEdit } from './components/user-info-edit';
+import { UserInfoTable } from './components/account-info-table';
+import { UserInfoEdit } from './components/account-info-edit';
 import { IconButton } from '../../../../shared/components/inputs/icon-button';
 
 export const RootPage = memo(() => {
