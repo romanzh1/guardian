@@ -22,7 +22,9 @@ const SearchBar = () => {
                     className={styles.searchInput}
                 />
             </label>
-            <UserMenu />
+            <div className={styles.userMenuContainer}>
+                <UserMenu />
+            </div>
         </div>
     );
 };
