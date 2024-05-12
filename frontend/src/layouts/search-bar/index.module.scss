@@ -1,22 +1,24 @@
 .searchBar {
   display: flex;
-  justify-content: space-between;  // Распределение элементов по обеим сторонам
-  align-items: center;  // Выравнивание элементов по вертикали
+  align-items: center;
+  justify-content: center; /* Центрируем элементы */
+  position: relative;
   padding: 10px;
   background-color: #007bff;
+  min-height: 40px; /* Задаем минимальную высоту */
 }
 
 .searchLabel {
-  position: relative;
+  position: absolute;
+  left: 25%; /* Центрируем searchLabel относительно начала */
+  width: 50%; /* Ширина элемента равна половине ширины родителя */
   display: flex;
   align-items: center;
-  flex-grow: 1;  // Позволяет searchLabel расти, но не более 50%
-  max-width: 50%;  // Ограничивает максимальную ширину
 }
 
 .searchInput {
-  width: 100%;  // Занимает всю доступную ширину в searchLabel
-  padding: 8px 8px 8px 32px;  // Подгонка внутренних отступов
+  width: 100%;
+  padding: 8px 8px 8px 32px; /* Отступ слева для иконки */
   border: 2px solid transparent;
   background-color: #0056b3;
   color: white;
@@ -26,10 +28,9 @@
 
 .searchIcon {
   position: absolute;
-  left: 8px;
+  left: 8px; /* Позиционирование от левого края input */
   color: white;
 }
-
 .searchInput::placeholder {
   color: #bfbfe5;
 }
