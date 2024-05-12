@@ -20,7 +20,7 @@ type Item = {
   visible: boolean;
 };
 
-export const AdminMainMenu = () => {
+export const GuardianMainMenu = () => {
   const ITEMS = useMemo<Array<Item>>(
     () => [
       {
