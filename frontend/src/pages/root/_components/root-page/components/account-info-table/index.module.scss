@@ -2,52 +2,70 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px; // Расстояние между блоками
+    gap: 20px;
 }
 
 .block {
-    border: 1px solid #ccc; // Цвет рамки блока
-    background-color: #f9f9f9; // Цвет фона блока
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); // Тень для блока
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border-radius: 0 !important;
 }
 
 .header {
-    font-size: 16px; // Размер шрифта для заголовка
-    font-weight: bold; // Жирность шрифта заголовка
-    padding: 12px 10px; // Отступы заголовка
-    background-color: #eee; // Цвет фона заголовка
-    border-bottom: 1px solid #ddd; // Разделитель под заголовком
+    font-size: 14px !important;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #eee;
+    color: #888 !important;
+    border-bottom: 1px solid #ddd;
 }
 
 .row {
-    &:hover {
-        background-color: #e9f4ff; // Цвет фона строки при наведении
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center !important;
+    padding: 4px 10px;
+    height: auto;
 }
 
 .fullWidthCell {
     display: flex;
-    flex-direction: column; // Вертикальное выравнивание элементов в ячейке
-    align-items: start; // Выравнивание элементов по левому краю
-    padding: 10px; // Отступы внутри ячейки
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+}
 
-    .MuiTypography-subtitle {
-        margin-bottom: 4px; // Отступ под заголовком элемента
-        color: #333; // Цвет текста заголовка
-        font-weight: bold; // Жирность текста заголовка
-    }
+.label {
+    font-size: 14px;
+    color: #888 !important;
+    margin-bottom: 2px;
+}
 
-    .MuiTypography-body {
-        color: #666; // Цвет основного текста
-    }
+.value {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
 }
 
 .icons {
     display: flex;
-    justify-content: flex-end; // Выравнивание иконок по правому краю
-    margin-top: 8px; // Отступ сверху для группы иконок
+    justify-content: flex-end;
+    gap: 8px;
+    align-items: center;
+}
 
-    .MuiIconButton-root {
-        margin-left: 8px; // Отступ между иконками
-    }
+.dates {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    color: #888888;
+}
+
+.dates .date {
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: #888888;
 }
