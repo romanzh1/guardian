@@ -13,50 +13,66 @@ const formSchema = z.object({
   name: z.string().nonempty(REQUIRED_FIELD),
   userName: z.string().nonempty(REQUIRED_FIELD),
   password: z.string().nonempty(REQUIRED_FIELD),
+  email: z.string().optional(),
+  websites: z.array(z.string()).optional(),
+  custom_fields: z.array(z.object({
+    key: z.string().nonempty(REQUIRED_FIELD),
+    value: z.string().nonempty(REQUIRED_FIELD),
+    secret: z.boolean().optional(),
+  })).optional(),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
 
+function CustomFieldsInput(props: { fieldName: string }) {
+  return null;
+}
+
+function handleFormSubmit() {
+  console.log('submit');
+}
+
 export const UserInfoEdit = memo(() => {
   const { id } = useValidRouteParams('root');
   const { data, isFetching } = queries.guardian.useGetAllAccountsById({ id });
+
   const initData = useMemo<FormSchema>(() => {
+    // Ensuring default values align with the expected types:
+    // Use an empty array as default for `websites` and `custom_fields`
+    // Use empty string or undefined as appropriate for optional fields
     return {
-      name: data && !isFetching ? data.name : '',
-      userName: data && !isFetching ? data.user_name : '',
-      email: data && !isFetching ? data.email : '',
-      password: data && !isFetching ? data.password : '',
+      name: data?.name ?? '',
+      userName: data?.user_name ?? '',
+      email: data?.email,  // can be undefined naturally if not fetched
+      password: data?.password ?? '',
+      websites: data?.websites ?? [],
+      custom_fields: data?.custom_fields ?? [],  // default to empty array if null or undefined
     };
   }, [data, isFetching]);
 
   const methods = useForm<FormSchema>({
-    values: initData,
-    mode: 'all',
-    resolver: zodResolver(formSchema, {}, { mode: 'sync' }),
+    defaultValues: initData,
+    resolver: zodResolver(formSchema),
   });
 
-  const handleFormSubmit = useCallback((value: FormSchema) => {
-    console.log(value);
-  }, []);
-
   return (
-    <div className={styles.root}>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(handleFormSubmit)}>
-          <div className={styles.form}>
-            <ControllerInput fieldName="name" helperText label="Name*" placeholder="Login" />
-            <ControllerInput fieldName="userName" helperText label="User Name*" placeholder="Password" />
-            <ControllerInput fieldName="email" helperText label="Email*" placeholder="Password" />
-            <ControllerInput fieldName="password" helperText label="Password*" placeholder="Password" />
-            <div className={styles.button}>
-              <Button type="submit" variant="contained">
-                Save
-              </Button>
+      <div className={styles.root}>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(handleFormSubmit)}>
+            <div className={styles.form}>
+              {/* Render all existing inputs, ensuring helperText handling is corrected */}
+              <ControllerInput fieldName="name" label="Name*" placeholder="Enter Name" helperText={undefined} />
+              <ControllerInput fieldName="userName" label="User Name*" placeholder="Enter User Name" helperText={undefined} />
+              <ControllerInput fieldName="email" label="Email" placeholder="Enter Email" helperText={undefined} />
+              <ControllerInput fieldName="password" label="Password*" placeholder="Enter Password" helperText={undefined} />
+              <ControllerInput fieldName="websites" label="Websites" placeholder="Enter Websites" helperText={undefined} multiline />
+              <CustomFieldsInput fieldName="custom_fields" />
+              <div className={styles.button}>
+                <Button type="submit" variant="contained">Save</Button>
+              </div>
             </div>
-          </div>
-        </form>
-      </FormProvider>
-    </div>
+          </form>
+        </FormProvider>
+      </div>
   );
 });

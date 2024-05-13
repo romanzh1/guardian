@@ -10,7 +10,11 @@ const response = z.object({
   password: z.string(),
   is_favourite: z.boolean(),
   websites: z.array(z.string()),
-  custom_fields: z.any().nullable(),
+  custom_fields: z.array(z.object({
+    key: z.string(),
+    value: z.string(),
+    secret: z.boolean(),
+  })).nullable(),
 });
 
 export type Params = { id: string };
