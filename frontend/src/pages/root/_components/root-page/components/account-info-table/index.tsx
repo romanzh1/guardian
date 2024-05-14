@@ -1,5 +1,5 @@
 import { memo, useState } from 'react';
-import { Box, Table, TableBody, TableCell, Typography, IconButton, Paper } from '@mui/material';
+import {Box, Table, TableBody, TableCell, Typography, IconButton, Paper, styled} from '@mui/material';
 import TableRow from '@mui/material/TableRow';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import LinkIcon from '@mui/icons-material/Link';
@@ -8,6 +8,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { queries } from 'src/api';
 import { useValidRouteParams } from 'src/libs';
 import styles from './index.module.scss';
+const StyledTypographyLabel = styled(Typography)`
+    font-size: 14px;
+    color: #888;`;
+const StyledTableCell = styled(TableCell)`
+    padding: 7px 14px;`;
 
 export const UserInfoTable = memo(() => {
     const { id } = useValidRouteParams('root');
@@ -36,10 +41,12 @@ export const UserInfoTable = memo(() => {
                             <TableBody>
                                 {section.fields && section.fields.map((item, idx) => (
                                     <TableRow key={idx} className={styles.row}>
-                                        <TableCell colSpan={2} className={styles.fullWidthCell}>
-                                            <Typography variant="subtext" className={styles.label}>{item.label}</Typography>
+                                        <StyledTableCell colSpan={2} className={styles.fullWidthCell}>
                                             <div className={styles.value}>
-                                                <Typography>{hiddenFields[item.label] ? '•••••••' : item.value}</Typography>
+                                                    <div>
+                                                        <StyledTypographyLabel variant="subtext" className={styles.label}>{item.label}</StyledTypographyLabel>
+                                                        <Typography>{hiddenFields[item.label] ? '•••••••' : item.value}</Typography>
+                                                    </div>
                                                 <div className={styles.icons}>
                                                     <IconButton onClick={() => navigator.clipboard.writeText(item.value)}>
                                                         <ContentCopyIcon />
@@ -56,7 +63,7 @@ export const UserInfoTable = memo(() => {
                                                     )}
                                                 </div>
                                             </div>
-                                        </TableCell>
+                                        </StyledTableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
