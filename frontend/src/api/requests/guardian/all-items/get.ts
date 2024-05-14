@@ -15,6 +15,8 @@ const response = z.object({
     value: z.string(),
     secret: z.boolean(),
   })).nullable(),
+  updated_at: z.string(),
+  created_at: z.string(),
 });
 
 export type Params = { id: string };
