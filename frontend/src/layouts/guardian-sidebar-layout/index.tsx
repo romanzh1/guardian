@@ -7,7 +7,7 @@ import { RouterTypographyLink } from 'src/features/router5';
 import { Button } from 'src/shared/components';
 import styles from './index.module.scss';
 
-export const AdminSidebarLayout = ({ children }: PropsWithChildren<{}>) => {
+export const GuardianSidebarLayout = ({ children }: PropsWithChildren<{}>) => {
   const theme = useTheme();
   const router = useRouter();
   const handleBackClick = useCallback(() => {

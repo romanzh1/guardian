@@ -1,11 +1,11 @@
 import React from 'react';
 import { RootLayout } from 'src/layouts/root-layout';
-import { AdminSidebarLayout } from 'src/layouts/admin-sidebar-layout';
+import { GuardianSidebarLayout } from 'src/layouts/guardian-sidebar-layout';
 import { GuardianMainMenu } from 'src/widgets/guardian-main-menu';
 import { RootPage } from './_components';
 import { AdminLayout } from '../../layouts/admin-layout';
 import SearchBar from "../../layouts/search-bar";
-//import FooterActions from "../../layouts/footer";
+import FooterActions from "../../layouts/footer";
 
 const Page = () => {
     return (
@@ -13,9 +13,9 @@ const Page = () => {
             <SearchBar />
             <AdminLayout
                 sidebar={
-                    <AdminSidebarLayout>
+                    <GuardianSidebarLayout>
                         <GuardianMainMenu />
-                    </AdminSidebarLayout>
+                    </GuardianSidebarLayout>
                 }
             >
                 <RootPage />
