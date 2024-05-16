@@ -1,24 +1,33 @@
-.root{
-  padding: 20px 40px 0 40px;
-  overflow: auto;
+.root {
   display: flex;
   flex-direction: column;
-  row-gap: 16px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  position: relative;
 }
+
 .content {
-  width: 50%;
-  display: grid;
-  grid-template-columns: 1fr 50px;
+  width: 80%;
+  display: flex;
   align-items: start;
-  gap: 16px;
-
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 84vh;
 }
 
-.table{
+.tableWrapper {
+  overflow-y: auto;
 }
 
-.button{
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.fixedButtons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  background: white;
 }

@@ -9,7 +9,7 @@ export const LayoutWithStyledScroll = memo(({ children }: PropsWithChildren<{}>)
     <Box
       sx={{
         width: '100%',
-        height: '100vh',
+        height: '70vh',
         '*::-webkit-scrollbar': { width: '6px', height: '6px' },
         '*::-webkit-scrollbar-track': {
           backgroundColor: track,
