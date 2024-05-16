@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './index.module.scss';
 import SearchIcon from '@mui/icons-material/Search';
 import UserMenu from './user-menu';
+import { GuardianSidebarLayout } from 'src/layouts/guardian-sidebar-layout';
 
 const SearchBar = () => {
     const [query, setQuery] = useState('');
@@ -12,6 +13,9 @@ const SearchBar = () => {
 
     return (
         <div className={styles.searchBar}>
+            <div className={styles.name}>
+                <GuardianSidebarLayout />
+            </div>
             <label className={styles.searchLabel}>
                 <SearchIcon className={styles.searchIcon} />
                 <input

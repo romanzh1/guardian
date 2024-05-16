@@ -7,7 +7,7 @@ import { RouterTypographyLink } from 'src/features/router5';
 import { Button } from 'src/shared/components';
 import styles from './index.module.scss';
 
-export const GuardianSidebarLayout = ({ children }: PropsWithChildren<{}>) => {
+export const GuardianSidebarLayout = () => {
   const theme = useTheme();
   const router = useRouter();
   const handleBackClick = useCallback(() => {
@@ -25,9 +25,9 @@ export const GuardianSidebarLayout = ({ children }: PropsWithChildren<{}>) => {
               fontSize: '1.5rem',
               fontWeight: 900,
               textDecoration: 'none',
-              color: theme.palette.createIssueHeader.text,
+              color: 'white',
               '&:hover': {
-                color: theme.palette.primary.main,
+                color: 'white',
               },
             }}
           >
@@ -35,7 +35,6 @@ export const GuardianSidebarLayout = ({ children }: PropsWithChildren<{}>) => {
           </RouterTypographyLink>
         </div>
       </div>
-      <div className={styles.content}>{children}</div>
     </div>
   );
 };

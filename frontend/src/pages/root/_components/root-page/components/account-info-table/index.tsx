@@ -32,7 +32,7 @@ export const UserInfoTable = memo(() => {
                             { label: 'Username', value: data.user_name, secret: false },
                             { label: 'Password', value: data.password, secret: true }
                         ]},
-                    { title: 'Website', fields: data.websites?.map(website => ({ label: 'Website', value: website, secret: false })) || []},
+                    { title: 'Websites', fields: data.websites?.map(website => ({ label: 'Website', value: website, secret: false })) || []},
                     { title: 'Custom Fields', fields: data.custom_fields?.map(field => ({ label: field.key, value: field.value, secret: false })) || [] }
                 ].map((section, index) => (
                     <Paper elevation={3} className={styles.block} key={index}>
