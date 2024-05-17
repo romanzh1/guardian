@@ -6,6 +6,7 @@ import { UserInfoTable } from './components/account-info-table';
 import { UserInfoEdit } from './components/account-info-edit';
 import { IconButton } from '../../../../shared/components/inputs/icon-button';
 import { AccountInfoButtons } from './components/account-info-buttons';
+import { AccountEditButtons } from './components/account-edit-buttons';
 
 export const RootPage = memo(() => {
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -30,7 +31,7 @@ export const RootPage = memo(() => {
                 </div>
             </div>
             <div className={styles.fixedButtons}>
-                <AccountInfoButtons />
+                {!editMode ? <AccountInfoButtons /> : <AccountEditButtons />}
             </div>
         </div>
     );

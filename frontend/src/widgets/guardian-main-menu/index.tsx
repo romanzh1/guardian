@@ -32,18 +32,17 @@ const StyledRightButton = styled(Button)`
     height: 37.95px;
 `;
 
-export const GuardianMainMenu = () => {
+interface GuardianMainMenuProps {
+    searchTerm: string;
+}
+
+export const GuardianMainMenu: React.FC<GuardianMainMenuProps> = ({ searchTerm }) => {
     const { route } = useRoute();
     const [expanded, setExpanded] = useState(true);
-    // TODO
-    const handleChangePath = (newData: string) => () => {
-        console.log(newData);
-        // setRoute or similar logic here
-    };
 
     const ITEMS = [
-        { icon: <StarPurple500Outlined />, label: 'All items', path: 'allItems', visible: true },
-        { icon: <CategoryOutlined />, label: 'Favorites', path: 'favorites', visible: true },
+        { icon: <CategoryOutlined/>, label: 'All items', path: 'allItems', visible: true },
+        { icon: <StarPurple500Outlined />, label: 'Favorites', path: 'favorites', visible: true },
         { icon: <AutoDeleteOutlined />, label: 'Trash', path: 'trash', visible: true },
         { label: 'Types', children: [
                 { icon: <AssignmentIndOutlined />, label: 'Login', path: 'login', visible: true },
@@ -58,8 +57,8 @@ export const GuardianMainMenu = () => {
 
     // TODO
     let selectedType: string = 'allItems';
-    // TODO
-    const filteredData = data.filter(item => selectedType === selectedType);
+    const filteredData = data.filter(item =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) && selectedType === selectedType);
 
     function setSelectedType(path: string) {
         console.log(path);

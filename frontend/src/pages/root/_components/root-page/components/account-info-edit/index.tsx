@@ -1,78 +1,121 @@
-import { memo, useCallback, useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { memo, useState } from 'react';
+import { Box, Table, TableBody, TableCell, Typography, IconButton, Paper, styled, TextField, Button, Checkbox, FormControlLabel } from '@mui/material';
+import TableRow from '@mui/material/TableRow';
 import { queries } from 'src/api';
+import { useValidRouteParams } from 'src/libs';
 import styles from './index.module.scss';
-import { ControllerInput } from '../../../../../../features/react-hook-form/components';
-import { Button } from '../../../../../../shared/components';
-import { REQUIRED_FIELD } from '../../../../../../constants';
-import { useValidRouteParams } from '../../../../../../libs';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-const formSchema = z.object({
-  name: z.string().nonempty(REQUIRED_FIELD),
-  userName: z.string().nonempty(REQUIRED_FIELD),
-  password: z.string().nonempty(REQUIRED_FIELD),
-  email: z.string().optional(),
-  websites: z.array(z.string()).optional(),
-  custom_fields: z.array(z.object({
-    key: z.string().nonempty(REQUIRED_FIELD),
-    value: z.string().nonempty(REQUIRED_FIELD),
-    secret: z.boolean().optional(),
-  })).optional(),
-});
+const StyledTypographyLabel = styled(Typography)`
+    font-size: 14px;
+    color: #888;
+`;
 
-type FormSchema = z.infer<typeof formSchema>;
-
-function CustomFieldsInput(props: { fieldName: string }) {
-  return null;
-}
-
-function handleFormSubmit() {
-  console.log('submit');
-}
+const StyledTableCell = styled(TableCell)`
+    padding: 7px 14px;
+`;
 
 export const UserInfoEdit = memo(() => {
   const { id } = useValidRouteParams('root');
-  const { data, isFetching } = queries.guardian.useGetAllAccountsById({ id });
+  const { data } = queries.guardian.useGetAllAccountsById({ id });
+  const [hiddenFields, setHiddenFields] = useState({});
+  const [websites, setWebsites] = useState(data?.websites || []);
+  const [customFields, setCustomFields] = useState(data?.custom_fields || []);
+  const [isFavourite, setIsFavourite] = useState(false);
 
-  const initData = useMemo<FormSchema>(() => {
-    // Ensuring default values align with the expected types:
-    // Use an empty array as default for `websites` and `custom_fields`
-    // Use empty string or undefined as appropriate for optional fields
-    return {
-      name: data?.name ?? '',
-      userName: data?.user_name ?? '',
-      email: data?.email,  // can be undefined naturally if not fetched
-      password: data?.password ?? '',
-      websites: data?.websites ?? [],
-      custom_fields: data?.custom_fields ?? [],  // default to empty array if null or undefined
-    };
-  }, [data, isFetching]);
+  const handleAddWebsite = () => {
+    setWebsites([...websites, '']);
+  };
 
-  const methods = useForm<FormSchema>({
-    defaultValues: initData,
-    resolver: zodResolver(formSchema),
-  });
+  const handleAddCustomField = () => {
+    // @ts-ignore
+    setCustomFields([...customFields, { key: '', value: '' }]);
+  };
 
-  return (
-      <div className={styles.root}>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(handleFormSubmit)}>
-            <div className={styles.form}>
-              {/* Render all existing inputs, ensuring helperText handling is corrected */}
-              <ControllerInput fieldName="name" label="Name*" placeholder="Enter Name" helperText={undefined} />
-              <ControllerInput fieldName="userName" label="User Name*" placeholder="Enter User Name" helperText={undefined} />
-              <ControllerInput fieldName="email" label="Email" placeholder="Enter Email" helperText={undefined} />
-              <ControllerInput fieldName="password" label="Password*" placeholder="Enter Password" helperText={undefined} />
-              <ControllerInput fieldName="websites" label="Websites" placeholder="Enter Websites" helperText={undefined} multiline />
-              <CustomFieldsInput fieldName="custom_fields" />
-              <div className={styles.button}>
-                <Button type="submit" variant="contained">Save</Button>
-              </div>
-            </div>
-          </form>
-        </FormProvider>
-      </div>
-  );
+  const handleWebsiteChange = (index: number, value: string) => {
+    const newWebsites = [...websites];
+    newWebsites[index] = value;
+    setWebsites(newWebsites);
+  };
+
+  const handleCustomFieldChange = (index: number, key: string, value: string) => {
+    const newCustomFields = [...customFields];
+    // @ts-ignore
+    newCustomFields[index][key] = value;
+    setCustomFields(newCustomFields);
+  };
+
+  const toggleVisibility = (field: string) => {
+    // @ts-ignore
+    setHiddenFields(prev => ({ ...prev, [field]: !prev[field] }));
+  };
+
+  if (data)
+    { 
+      
+      return (
+              <Box className={styles.root}>
+                {[
+                  { title: 'Item Information', fields: [
+                      { label: 'Name', value: data.name, secret: false },
+                      { label: 'Username', value: data.user_name, secret: false },
+                      { label: 'Password', value: data.password, secret: true }
+                    ]},
+                  { title: 'Websites', fields: websites.map(website => ({ label: 'Website', value: website, secret: false })) },
+                  { title: 'Custom Fields', fields: customFields.map(field => ({ label: field.key, value: field.value, secret: false })) }
+                ].map((section, index) => (
+                    <Paper elevation={3} className={styles.block} key={index}>
+                      <Typography variant="h4" className={styles.header}>{section.title}</Typography>
+                      <Table>
+                        <TableBody>
+                          {section.fields && section.fields.map((item, idx) => (
+                              <TableRow key={idx} className={styles.row}>
+                                <StyledTableCell colSpan={2} className={styles.fullWidthCell}>
+                                  <div className={styles.value}>
+                                    <div>
+                                      <StyledTypographyLabel variant="subtext" className={styles.label}>{item.label}</StyledTypographyLabel>
+                                      <TextField
+                                          value={item.value}
+                                          onChange={(e) => {
+                                            if (item.label === 'Website') {
+                                              handleWebsiteChange(idx, e.target.value);
+                                            } else {
+                                              handleCustomFieldChange(idx, item.label, e.target.value);
+                                            }
+                                          }}
+                                          fullWidth
+                                      />
+                                    </div>
+                                    {item.secret && (
+                                        <IconButton onClick={() => toggleVisibility(item.label)}>
+                                           <VisibilityIcon />
+                                        </IconButton>
+                                    )}
+                                  </div>
+                                </StyledTableCell>
+                              </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                      {section.title === 'Websites' && (
+                          <Button onClick={handleAddWebsite}>Add Website</Button>
+                      )}
+                      {section.title === 'Custom Fields' && (
+                          <Button onClick={handleAddCustomField}>Add Custom Field</Button>
+                      )}
+                    </Paper>
+                ))}
+                <FormControlLabel
+                    control={<Checkbox checked={isFavourite} onChange={(e) => setIsFavourite(e.target.checked)} />}
+                    label="Favourite"
+                />
+                <div className={styles.dates}>
+                  <Typography variant="tinytext" className={styles.date}><strong>Updated:</strong> {new Date(data.updated_at).toLocaleString()}</Typography>
+                  <Typography variant="tinytext" className={styles.date}><strong>Created:</strong> {new Date(data.created_at).toLocaleString()}</Typography>
+                </div>
+              </Box>
+          );
+    }
+  return null;
 });
