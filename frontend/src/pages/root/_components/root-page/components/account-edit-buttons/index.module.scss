@@ -1,0 +1,23 @@
+.actionButtons {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+    justify-content: space-between;
+    background-color: white;
+
+    .leftButtons{
+        margin: 13px 0 20px 20px;
+        height: 38px;
+    }
+
+    .rightButtons {
+        margin: 0px 20px 0 0;
+        height: 38px;
+        justify-content: flex-end;
+    }
+
+    .leftButtons .actionButton:not(:last-child) {
+        margin-right: 10px;
+    }
+}

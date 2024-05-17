@@ -20,7 +20,7 @@ const UserMenu = () => {
     return (
         <div className={styles.userMenuContainer}>
             <AccountCircleIcon onClick={handleMenu} style={{ fontSize: '3rem', cursor: 'pointer', color: 'white' }} />
-            <span className={styles.username}>zhr1kroman@gmail.com</span>
+            <span className={styles.username}>roman@gmail.com</span>
             <ArrowDropDownIcon onClick={handleMenu} style={{ color: 'white', cursor: 'pointer' }} />
             <Menu
                 anchorEl={anchorEl}

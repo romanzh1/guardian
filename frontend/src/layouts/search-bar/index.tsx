@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styles from './index.module.scss';
 import SearchIcon from '@mui/icons-material/Search';
 import UserMenu from './user-menu';
 import { GuardianSidebarLayout } from 'src/layouts/guardian-sidebar-layout';
 
-const SearchBar = () => {
-    const [query, setQuery] = useState('');
+interface SearchBarProps {
+    onSearch: (term: string) => void;
+}
 
-    const handleSearchChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setQuery(event.target.value);
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+        onSearch(event.target.value); // Передаем значение поиска в родительский компонент
     };
 
     return (
@@ -21,8 +26,8 @@ const SearchBar = () => {
                 <input
                     type="text"
                     placeholder="Search vault"
-                    value={query}
-                    onChange={handleSearchChange}
+                    value={searchTerm}
+                    onChange={handleChange}
                     className={styles.searchInput}
                 />
             </label>
