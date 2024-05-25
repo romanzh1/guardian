@@ -16,7 +16,7 @@ const StyledTableCell = styled(TableCell)`
 
 export const UserInfoTable = memo(() => {
     const { id } = useValidRouteParams('root');
-    const { data } = queries.guardian.useGetAllAccountsById({ id });
+    const { data } = queries.guardian.useGetAccount({ id });
     const [hiddenFields, setHiddenFields] = useState<{ [key: string]: boolean }>({});
 
     const toggleVisibility = (field: string) => {

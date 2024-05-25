@@ -1,3 +1,3 @@
 export * from './use-get-user';
-export * from './use-get-all-accounts';
-export * from './use-get-all-accounts-by-id';
+export * from './use-get-account';
+export * from './use-get-all-accounts-list';

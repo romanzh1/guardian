@@ -5,7 +5,6 @@ import { queries } from 'src/api';
 import { useValidRouteParams } from 'src/libs';
 import styles from './index.module.scss';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const StyledTypographyLabel = styled(Typography)`
     font-size: 14px;
@@ -18,8 +17,7 @@ const StyledTableCell = styled(TableCell)`
 
 export const UserInfoEdit = memo(() => {
   const { id } = useValidRouteParams('root');
-  const { data } = queries.guardian.useGetAllAccountsById({ id });
-  const [hiddenFields, setHiddenFields] = useState({});
+  const { data } = queries.guardian.useGetAccount({ id });
   const [websites, setWebsites] = useState(data?.websites || []);
   const [customFields, setCustomFields] = useState(data?.custom_fields || []);
   const [isFavourite, setIsFavourite] = useState(false);
