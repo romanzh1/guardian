@@ -1,12 +1,15 @@
 .root {
   background: white;
+  height: 100%;
 }
 
 .content {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
+  grid-template-rows: auto 78px;
   gap: 1px;
   border: 1px solid var(--mui-palette-adminSidebar-border);
+  height: 100%;
 }
 
 .item,

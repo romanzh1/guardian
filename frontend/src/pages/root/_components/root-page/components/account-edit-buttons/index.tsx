@@ -5,7 +5,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styles from './index.module.scss';
 
-export const AccountEditButtons = () => {
+// @ts-ignore
+export const AccountEditButtons = ({ onCancelClick }) => {
     return (
         <div className={styles.actionButtons}>
             <div className={styles.leftButtons}>
@@ -20,18 +21,18 @@ export const AccountEditButtons = () => {
                         variant="outlined"
                         color="secondary"
                         startIcon={<CancelIcon />}
+                        onClick={onCancelClick}
                 >
                     Cancel
                 </Button>
             </div>
             <Button className={styles.rightButtons}
-                variant="outlined"
-                color="error"
-                startIcon={<DeleteIcon />}
+                    variant="outlined"
+                    color="error"
+                    startIcon={<DeleteIcon />}
             >
                 Delete
             </Button>
         </div>
     );
 };
-
