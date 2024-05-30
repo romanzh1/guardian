@@ -5,8 +5,11 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styles from './index.module.scss';
 
-// @ts-ignore
-export const AccountInfoButtons = ({ onEditClick }) => {
+interface AccountButtonsProps {
+    onEditClick: () => void;
+}
+
+export const AccountInfoButtons = ({ onEditClick }: AccountButtonsProps) => {
     return (
         <div className={styles.actionButtons}>
             <div className={styles.leftButtons}>
