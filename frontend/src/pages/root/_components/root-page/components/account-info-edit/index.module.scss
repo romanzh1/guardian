@@ -1,5 +1,5 @@
 .root {
-  padding: 20px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   width: 90%;
@@ -49,17 +49,4 @@
   justify-content: flex-end;
   gap: 8px;
   align-items: center;
-}
-
-.dates {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  color: #888888;
-}
-
-.dates .date {
-  font-size: 15px;
-  margin-bottom: 4px;
-  color: #888888;
 }
