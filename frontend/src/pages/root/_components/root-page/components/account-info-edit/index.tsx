@@ -18,7 +18,7 @@ const StyledTableCell = styled(TableCell)`
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root': {
-    padding: '0 5px',
+    padding: '0 0',
     '& .MuiInputBase-input': {
       padding: '0',
     },
