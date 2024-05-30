@@ -31,6 +31,23 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+const StyledCustomLabel = styled(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-root': {
+    padding: '0 0',
+    '& .MuiInputBase-input': {
+      padding: '0',
+      color: '#888',
+      fontSize: '14px',
+    },
+  },
+  '& fieldset': {
+    border: '0px',
+  },
+  '& .MuiInputLabel-root': {
+    display: 'none',
+  },
+}));
+
 interface Field {
   label: string;
   value: string;
@@ -75,6 +92,12 @@ export const UserInfoEdit = memo(() => {
     setStandardFields((prev) => ({ ...prev, [key]: value }));
   };
 
+  const handleCustomLabelChange = (index: number, value: string) => {
+    const newCustomFields = [...customFields];
+    newCustomFields[index].key = value;
+    setCustomFields(newCustomFields);
+  };
+
   const toggleVisibility = (field: string) => {
     setHiddenFields(prev => ({ ...prev, [field]: !prev[field] }));
   };
@@ -103,7 +126,15 @@ export const UserInfoEdit = memo(() => {
                           <StyledTableCell colSpan={2} className={styles.fullWidthCell}>
                             <div className={styles.value}>
                               <div>
-                                <StyledTypographyLabel variant="subtext" className={styles.label}>{item.label}</StyledTypographyLabel>
+                                {section.title === 'Custom Fields' ? (
+                                    <StyledCustomLabel
+                                        value={item.label}
+                                        onChange={(e) => handleCustomLabelChange(item.index!, e.target.value)}
+                                        fullWidth
+                                    />
+                                ) : (
+                                    <StyledTypographyLabel variant="subtext" className={styles.label}>{item.label}</StyledTypographyLabel>
+                                )}
                                 <StyledTextField
                                     value={item.value}
                                     onChange={(e) => {
