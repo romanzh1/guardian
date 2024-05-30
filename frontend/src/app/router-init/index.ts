@@ -18,7 +18,7 @@ export const router = createRouter(checkedRoutes, {
   queryParamsMode: 'loose',
 });
 
-router.setDependencies({ routes, postfixTitle: 'RM' });
+router.setDependencies({ routes, postfixTitle: 'Guardian' });
 router.usePlugin(browserPlugin());
 router.usePlugin(loggerPlugin);
 router.usePlugin(validRouterPlugin);

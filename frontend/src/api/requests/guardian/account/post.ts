@@ -5,7 +5,6 @@ import { RequestConfig } from 'src/libs';
 const response = z.any();
 
 export type Params = {
-    id: string,
     body: {
         name: string,
         email: string,
@@ -24,7 +23,7 @@ export type Params = {
 export type Response = z.infer<typeof response>;
 
 export const config: RequestConfig = {
-    method: 'PUT',
+    method: 'POST',
     url: 'http://localhost:8080/api/accounts',
     positiveSchema: response,
 };
@@ -32,7 +31,6 @@ export const config: RequestConfig = {
 export const send = (params: Params) => {
     return request.send<Response>({
         ...config,
-        url: `${config.url}/${params.id}`,
         body: JSON.stringify(params.body),
     })
 };

@@ -5,31 +5,39 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styles from './index.module.scss';
 
-// @ts-ignore
-export const AccountEditButtons = ({ onCancelClick }) => {
+interface AccountEditButtonsProps {
+    onCancelClick: () => void;
+    onSaveClick: () => void;
+}
+
+export const AccountEditButtons = ({ onCancelClick, onSaveClick }: AccountEditButtonsProps) => {
     return (
         <div className={styles.actionButtons}>
             <div className={styles.leftButtons}>
-                <Button className={styles.actionButton}
-                        variant="outlined"
-                        color="primary"
-                        startIcon={<SaveIcon />}
+                <Button
+                    className={styles.actionButton}
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<SaveIcon />}
+                    onClick={onSaveClick}
                 >
                     Save
                 </Button>
-                <Button className={styles.actionButton}
-                        variant="outlined"
-                        color="secondary"
-                        startIcon={<CancelIcon />}
-                        onClick={onCancelClick}
+                <Button
+                    className={styles.actionButton}
+                    variant="outlined"
+                    color="secondary"
+                    startIcon={<CancelIcon />}
+                    onClick={onCancelClick}
                 >
                     Cancel
                 </Button>
             </div>
-            <Button className={styles.rightButtons}
-                    variant="outlined"
-                    color="error"
-                    startIcon={<DeleteIcon />}
+            <Button
+                className={styles.rightButtons}
+                variant="outlined"
+                color="error"
+                startIcon={<DeleteIcon />}
             >
                 Delete
             </Button>

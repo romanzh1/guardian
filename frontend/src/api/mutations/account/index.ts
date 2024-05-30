@@ -1,3 +1,3 @@
-export * from './use-delete-tag';
-export * from './use-post-tag';
+export * from './use-delete-account';
+export * from './use-post-account';
 export * from './use-put-account';
