@@ -41,6 +41,7 @@ interface GuardianMainMenuProps {
 export const GuardianMainMenu: React.FC<GuardianMainMenuProps> = ({ searchTerm }) => {
   const { route } = useRoute();
   const [expanded, setExpanded] = useState(true);
+  const [selectedType, setSelectedType] = useState('allItems'); // State for selected type
 
   const ITEMS = [
     { icon: <CategoryOutlined />, label: 'All items', path: 'allItems', visible: true },
@@ -59,66 +60,70 @@ export const GuardianMainMenu: React.FC<GuardianMainMenuProps> = ({ searchTerm }
 
   const { data } = queries.guardian.useGetAccountsList();
 
-  // TODO
-  let selectedType: string = 'allItems';
-  const filteredData = data.filter(
-    item => item.name.toLowerCase().includes(searchTerm.toLowerCase()) && selectedType === selectedType,
-  );
+  const filteredData = data.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+    if (selectedType === 'favorites') {
+      return matchesSearch && item.is_favourite;
+    }
+    return matchesSearch;
+  });
 
-  function setSelectedType(path: string) {}
+  function handleSetSelectedType(path: string) {
+    setSelectedType(path);
+  }
 
   return (
-    <div className={styles.root}>
-      <div className={styles.content}>
-        <div className={styles.navigation}>
-          {ITEMS.map(item =>
-            item.children ? (
-              <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>{item.label}</Typography>
-                </AccordionSummary>
-                <StyledAccordionDetails>
-                  {item.children.map(subItem => (
+      <div className={styles.root}>
+        <div className={styles.content}>
+          <div className={styles.navigation}>
+            {ITEMS.map(item =>
+                item.children ? (
+                    <Accordion key={item.label} expanded={expanded} onChange={() => setExpanded(!expanded)}>
+                      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography>{item.label}</Typography>
+                      </AccordionSummary>
+                      <StyledAccordionDetails>
+                        {item.children.map(subItem => (
+                            <Typography
+                                key={subItem.path}
+                                className={cn(styles.item, { [styles.item_active]: selectedType === subItem.path })}
+                                onClick={() => handleSetSelectedType(subItem.path)}
+                            >
+                              <div className={styles.iconWrapper}>{subItem.icon}</div>
+                              <div className={styles.title}>{subItem.label}</div>
+                            </Typography>
+                        ))}
+                      </StyledAccordionDetails>
+                    </Accordion>
+                ) : (
                     <Typography
-                      key={subItem.path}
-                      className={cn(styles.item, { [styles.item_active]: selectedType === subItem.path })}
-                      onClick={() => setSelectedType(subItem.path)}
+                        key={item.path}
+                        className={cn(styles.item, { [styles.item_active]: selectedType === item.path })}
+                        onClick={() => handleSetSelectedType(item.path)}
                     >
-                      <div className={styles.iconWrapper}>{subItem.icon}</div>
-                      <div className={styles.title}>{subItem.label}</div>
+                      <div className={styles.iconWrapper}>{item.icon}</div>
+                      <div className={styles.title}>{item.label}</div>
                     </Typography>
-                  ))}
-                </StyledAccordionDetails>
-              </Accordion>
-            ) : (
-              <Typography
-                key={item.path}
-                className={cn(styles.item, { [styles.item_active]: selectedType === item.path })}
-                onClick={() => setSelectedType(item.path)}
-              >
-                <div className={styles.iconWrapper}>{item.icon}</div>
-                <div className={styles.title}>{item.label}</div>
-              </Typography>
-            ),
-          )}
-        </div>
-        <div className={styles.elements}>
-          {filteredData.map(item => (
-            <ItemInfo key={item.id} account={item.user_name} id={item.id} img={item.icon_link} name={item.name} />
-          ))}
-        </div>
-        <div className={styles.footer}>
-          <StyledLeftButton startIcon={<Lock />} className={styles.footer} variant="outlined">
-            My Vault
-          </StyledLeftButton>
-          <StyledLeftButton startIcon={<Send />} className={styles.footer} variant="outlined">
-            Send
-          </StyledLeftButton>
-        </div>
-        <div className={styles.footer}>
-          <StyledRightButton startIcon={<Add />} className={styles.footer} variant="outlined"></StyledRightButton>
+                ),
+            )}
+          </div>
+          <div className={styles.elements}>
+            {filteredData.map(item => (
+                <ItemInfo key={item.id} account={item.user_name} id={item.id} img={item.icon_link} name={item.name} />
+            ))}
+          </div>
+          <div className={styles.footer}>
+            <StyledLeftButton startIcon={<Lock />} className={styles.footer} variant="outlined">
+              My Vault
+            </StyledLeftButton>
+            <StyledLeftButton startIcon={<Send />} className={styles.footer} variant="outlined">
+              Send
+            </StyledLeftButton>
+          </div>
+          <div className={styles.footer}>
+            <StyledRightButton startIcon={<Add />} className={styles.footer} variant="outlined"></StyledRightButton>
+          </div>
         </div>
       </div>
-    </div>
   );
 };
