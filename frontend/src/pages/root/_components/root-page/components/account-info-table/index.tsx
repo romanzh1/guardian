@@ -53,7 +53,12 @@ export const UserInfoTable = memo(() => {
                         ]
                     },
                     { title: 'Websites', fields: data.websites?.map(website => ({ label: 'Website', value: website, secret: false })) || [] },
-                    { title: 'Custom Fields', fields: data.custom_fields?.map(field => ({ label: field.key, value: field.value, secret: field.secret })) || [] }
+                    { title: 'Custom Fields', fields: data.custom_fields?.map(field => ({ label: field.key, value: field.value, secret: field.secret })) || [] },
+                    {
+                        title: 'Note', fields: [
+                            { label: '', value: data.note, secret: false },
+                        ]
+                    },
                 ].map((section, index) => (
                     <Paper elevation={3} className={styles.block} key={index}>
                         <Typography variant="h4" className={styles.header}>{section.title}</Typography>
@@ -65,7 +70,7 @@ export const UserInfoTable = memo(() => {
                                             <div className={styles.value}>
                                                 <div>
                                                     <StyledTypographyLabel variant="subtext" className={styles.label}>{item.label}</StyledTypographyLabel>
-                                                    <Typography>{hiddenFields[item.label] ? '•••••••' : item.value}</Typography>
+                                                    <Typography >{hiddenFields[item.label] ? '•••••••' : item.value}</Typography>
                                                 </div>
                                                 <div className={styles.icons}>
                                                     <IconButton onClick={() => navigator.clipboard.writeText(item.value)}>
