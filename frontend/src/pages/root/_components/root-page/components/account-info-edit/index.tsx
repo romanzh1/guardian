@@ -68,7 +68,8 @@ export const UserInfoEdit = memo(forwardRef(({ onSave }: UserInfoEditProps, ref)
   const [standardFields, setStandardFields] = useState<{ [key: string]: string }>({
     name: data?.name || '',
     username: data?.user_name || '',
-    password: data?.password || ''
+    password: data?.password || '',
+    note: data?.note || ''
   });
   const [isFavourite, setIsFavourite] = useState(data?.is_favourite || false);
   const [hiddenFields, setHiddenFields] = useState<{ [key: string]: boolean }>({});
@@ -81,7 +82,8 @@ export const UserInfoEdit = memo(forwardRef(({ onSave }: UserInfoEditProps, ref)
     setStandardFields({
       name: data.name || '',
       username: data.user_name || '',
-      password: data.password || ''
+      password: data.password || '',
+      note: data?.note || ''
     });
     setIsFavourite(data.is_favourite || false);
 
@@ -142,6 +144,7 @@ export const UserInfoEdit = memo(forwardRef(({ onSave }: UserInfoEditProps, ref)
           is_favourite: isFavourite,
           websites: websites,
           custom_fields: customFields,
+          note: standardFields.note
         }
       };
       onSave(formData);
@@ -160,7 +163,12 @@ export const UserInfoEdit = memo(forwardRef(({ onSave }: UserInfoEditProps, ref)
             ]
           },
           { title: 'Websites', fields: websites.map((website, idx) => ({ label: 'Website', value: website, secret: false, index: idx })) },
-          { title: 'Custom Fields', fields: customFields.map((field, idx) => ({ label: field.key, value: field.value, secret: field.secret, index: idx })) }
+          { title: 'Custom Fields', fields: customFields.map((field, idx) => ({ label: field.key, value: field.value, secret: field.secret, index: idx })) },
+          {
+            title: 'Note', fields: [
+              { label: '', value: standardFields.note, secret: false },
+            ]
+          },
         ].map((section, index) => (
             <Paper elevation={3} className={styles.block} key={index}>
               <Typography variant="h4" className={styles.header}>{section.title}</Typography>
@@ -170,7 +178,7 @@ export const UserInfoEdit = memo(forwardRef(({ onSave }: UserInfoEditProps, ref)
                       <TableRow key={idx} className={styles.row}>
                         <StyledTableCell colSpan={2} className={styles.fullWidthCell}>
                           <div className={styles.value}>
-                            <div>
+                            <div className={styles.didi}>
                               {section.title === 'Custom Fields' ? (
                                   <StyledCustomLabel
                                       value={item.label}
@@ -181,13 +189,17 @@ export const UserInfoEdit = memo(forwardRef(({ onSave }: UserInfoEditProps, ref)
                                   <StyledTypographyLabel variant="subtext" className={styles.label}>{item.label}</StyledTypographyLabel>
                               )}
                               <StyledTextField
+                                  multiline
                                   value={item.value}
                                   onChange={(e) => {
                                     if (item.label === 'Website') {
                                       handleWebsiteChange(item.index!, e.target.value);
                                     } else if (section.title === 'Item Information') {
                                       handleStandardFieldChange(item.label.toLowerCase(), e.target.value);
-                                    } else {
+                                    } else if (section.title === 'Note') {
+                                      handleStandardFieldChange('note', e.target.value);
+                                    }
+                                    else {
                                       handleCustomFieldChange(item.index!, 'value', e.target.value);
                                     }
                                   }}
