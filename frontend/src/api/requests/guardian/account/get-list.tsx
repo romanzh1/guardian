@@ -9,6 +9,7 @@ const response = z.array(
     email: z.string(),
     user_name: z.string(),
     icon_link: z.string(),
+    is_favourite: z.boolean(),
   }),
 );
 
