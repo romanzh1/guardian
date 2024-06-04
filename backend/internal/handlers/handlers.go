@@ -13,11 +13,16 @@ func (h Handlers) InitializeHandlers() http.Handler {
 
 		r.Get("/accounts", h.GetAccounts)
 		r.Get("/accounts/{id}", h.GetAccount)
+		r.Post("/accounts", h.CreateAccount)
+		r.Put("/accounts/{id}", h.UpdateAccount)
+		r.Delete("/accounts/{id}", h.DeleteAccount)
 
 		r.Get("/user/{id}", h.GetUser)
 
-		r.Get("/secure_notes", h.GetSecureNotes)
-		r.Get("/secure_notes/{id}", h.GetSecureNote)
+		r.Get("/secure-notes", h.GetSecureNotes)
+		r.Get("/secure-notes/{id}", h.GetSecureNote)
+		//r.Post("/secure-notes", h.CreateSecureNote)
+		r.Put("/secure-notes/{id}", h.UpdateSecureNote)
 	})
 
 	return h.router

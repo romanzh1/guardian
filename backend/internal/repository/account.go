@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/romanzh1/guardian/backend/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -50,8 +51,22 @@ func (r Account) Update(ctx context.Context, account models.EntireAccount) (mode
 		return models.EntireAccount{}, fmt.Errorf("object rom hex: %w", err)
 	}
 
-	if _, err := r.db.db.Collection("accounts").UpdateByID(ctx, bson.M{"_id": oID}, account); err != nil {
-		return models.EntireAccount{}, fmt.Errorf("get account: %w", err)
+	update := bson.M{
+		"$set": bson.M{
+			"name":          account.Name,
+			"email":         account.Email,
+			"user_name":     account.Username,
+			"password":      account.Password,
+			"is_favourite":  account.IsFavourite,
+			"websites":      account.Websites,
+			"custom_fields": account.CustomFields,
+			"note":          account.Note,
+			"updated_at":    time.Now(),
+		},
+	}
+
+	if _, err := r.db.db.Collection("accounts").UpdateByID(ctx, oID, update); err != nil {
+		return models.EntireAccount{}, fmt.Errorf("update account: %w", err)
 	}
 
 	return account, nil
@@ -63,7 +78,7 @@ func (r Account) Delete(ctx context.Context, id string) error {
 		return fmt.Errorf("object from hex: %w", err)
 	}
 
-	if _, err := r.db.db.Collection("accounts").DeleteOne(ctx, bson.M{"_id": oID}); err != nil {
+	if _, err := r.db.db.Collection("accounts").DeleteOne(ctx, oID); err != nil {
 		return fmt.Errorf("delete account: %w", err)
 	}
 

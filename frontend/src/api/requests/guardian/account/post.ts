@@ -17,6 +17,7 @@ export type Params = {
             value: string,
             secret: boolean,
         }[],
+        note: string,
     }
 };
 

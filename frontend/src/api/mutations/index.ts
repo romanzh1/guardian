@@ -2,6 +2,7 @@ export * as tag from './tag';
 export * as serviceType from './service-type';
 export * as service from './service';
 export * as account from './account';
+export * as secureNote from './secure-note';
 
 export * from './use-post-passport-grant';
 export * from './use-post-passport-login';

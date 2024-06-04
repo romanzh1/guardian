@@ -1,0 +1,27 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+.content {
+  width: 80%;
+  display: flex;
+  align-items: start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 84vh;
+}
+
+.tableWrapper {
+  overflow-y: auto;
+}
+
+.fixedButtons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  background: white;
+}

@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongodb/mongodb-community-server:7.0.0-ubuntu2204
+    ports:
+      - "27017:27017"
+#    environment:
+#      MONGODB_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+#      MONGODB_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+#      MONGODB_INITDB_DATABASE: ${MONGO_DATABASE}
+    volumes:
+      - ${MONGO_DATA_PATH}:/mongo-data
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=${PORT}
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_DATABASE=${MONGO_DATABASE}
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+    depends_on:
+      - mongodb

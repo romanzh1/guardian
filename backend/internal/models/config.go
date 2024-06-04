@@ -1,35 +1,38 @@
 package models
 
+import (
+	"github.com/caarlos0/env/v11"
+)
+
+const (
+	EnvironmentLocal       = "local"
+	EnvironmentDevelopment = "development"
+	EnvironmentProd        = "prod"
+)
+
 type ServerConfig struct {
-	Port string
+	Port string `env:"PORT,required"`
 }
 
 type MongoConfig struct {
-	MongoHost     string
-	MongoDatabase string
-	MongoUsername string
-	MongoPassword string
+	MongoHost     string `env:"MONGO_HOST,required"`
+	MongoDatabase string `env:"MONGO_DATABASE,required"`
+	MongoUsername string `env:"MONGO_USERNAME"`
+	MongoPassword string `env:"MONGO_PASSWORD"`
+	Environment   string `env:"ENVIRONMENT" envDefault:"local"`
 }
 
 type Config struct {
-	Port          string `env:"PORT"`
-	MongoHost     string `env:"MONGO_HOST"`
-	MongoDatabase string `env:"MONGO_DATABASE"`
-	MongoUsername string `env:"MONGO_USERNAME"`
-	MongoPassword string `env:"MONGO_PASSWORD"`
+	ServerConfig ServerConfig
+	Mongo        MongoConfig
 }
 
-func (c Config) GetServer() ServerConfig {
-	return ServerConfig{
-		Port: c.Port,
-	}
-}
+func NewConfig() (Config, error) {
+	cfg := Config{}
 
-func (c Config) GetMongo() MongoConfig {
-	return MongoConfig{
-		MongoHost:     c.MongoHost,
-		MongoDatabase: c.MongoDatabase,
-		MongoUsername: c.MongoUsername,
-		MongoPassword: c.MongoPassword,
+	if err := env.Parse(&cfg); err != nil {
+		return cfg, err
 	}
+
+	return cfg, nil
 }
