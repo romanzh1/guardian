@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/romanzh1/guardian/backend/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -35,7 +36,15 @@ func (r SecureNote) Update(ctx context.Context, secureNote models.EntireSecureNo
 		return models.EntireSecureNote{}, fmt.Errorf("object rom hex: %w", err)
 	}
 
-	if _, err := r.db.db.Collection("secure_notes").UpdateByID(ctx, oID, secureNote); err != nil {
+	update := bson.M{
+		"$set": bson.M{
+			"name":       secureNote.Name,
+			"text":       secureNote.Text,
+			"updated_at": time.Now(),
+		},
+	}
+
+	if _, err := r.db.db.Collection("secure_notes").UpdateByID(ctx, oID, update); err != nil {
 		return models.EntireSecureNote{}, fmt.Errorf("update secure note: %w", err)
 	}
 

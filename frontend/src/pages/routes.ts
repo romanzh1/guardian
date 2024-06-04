@@ -7,7 +7,16 @@ export const routes = [
   {
     name: 'root',
     path: '/',
-    title: 'Основная страница',
+    title: 'Основная страница учетных записей',
+    Component: rootPage,
+    paramsSchema: z.object({
+      id: z.string().default(''),
+    }),
+  },
+  {
+    name: 'secure-note',
+    path: '/secure-note',
+    title: 'Страница защищенных заметок',
     Component: rootPage,
     paramsSchema: z.object({
       id: z.string().default(''),

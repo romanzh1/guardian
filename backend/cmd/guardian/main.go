@@ -7,7 +7,6 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/caarlos0/env"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/romanzh1/guardian/backend/internal/handlers"
@@ -25,14 +24,14 @@ func main() {
 	}
 	defer logger.Sync()
 
-	cfg := models.Config{}
-	if err := env.Parse(&cfg); err != nil {
+	cfg, err := models.NewConfig()
+	if err != nil {
 		zap.S().Fatalf("env parse: %s", err)
 	}
 
 	ctx := context.Background()
 
-	mongoDB, err := repository.NewMongoDB(ctx, cfg.GetMongo())
+	mongoDB, err := repository.NewMongoDB(ctx, cfg.Mongo)
 
 	accountRepo := repository.NewAccount(mongoDB)
 	secureNoteRepo := repository.NewSecureNote(mongoDB)
@@ -44,7 +43,7 @@ func main() {
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	//r.Use(middleware.StripSlashes)
+	r.Use(middleware.StripSlashes)
 
 	h := handlers.NewHandlers(r, accountUC, secureNoteUC, userUC)
 	h.AllowCORS()
@@ -53,7 +52,7 @@ func main() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
 
-	h.StartServe(ctx, cfg.GetServer(), quit)
+	h.StartServe(ctx, cfg.ServerConfig, quit)
 }
 
 func initLogger() (*zap.Logger, error) {

@@ -16,7 +16,7 @@ type secureNoteUseCase interface {
 }
 
 func (h Handlers) GetSecureNote(w http.ResponseWriter, r *http.Request) {
-	secureNote, err := h.account.Read(r.Context(), chi.URLParam(r, "id"))
+	secureNote, err := h.secureNote.Read(r.Context(), chi.URLParam(r, "id"))
 	if err != nil {
 		h.handleError(w, r, err)
 		return
@@ -26,11 +26,30 @@ func (h Handlers) GetSecureNote(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h Handlers) GetSecureNotes(w http.ResponseWriter, r *http.Request) {
-	secureNotes, err := h.account.List(r.Context())
+	secureNotes, err := h.secureNote.List(r.Context())
 	if err != nil {
 		h.handleError(w, r, err)
 		return
 	}
 
 	render.JSON(w, r, secureNotes)
+}
+
+func (h Handlers) UpdateSecureNote(w http.ResponseWriter, r *http.Request) {
+	secureNote := models.EntireSecureNote{}
+
+	secureNote.ID = chi.URLParam(r, "id")
+
+	if err := render.DecodeJSON(r.Body, &secureNote); err != nil {
+		h.handleError(w, r, err)
+		return
+	}
+
+	secureNote, err := h.secureNote.Update(r.Context(), secureNote)
+	if err != nil {
+		h.handleError(w, r, err)
+		return
+	}
+
+	render.JSON(w, r, secureNote)
 }

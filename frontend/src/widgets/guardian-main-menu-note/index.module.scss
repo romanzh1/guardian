@@ -1,0 +1,67 @@
+.root {
+  background: white;
+  height: 100%;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  grid-template-rows: auto 78px;
+  gap: 1px;
+  border: 1px solid var(--mui-palette-adminSidebar-border);
+  height: 100%;
+}
+
+.item,
+.accordionSummary {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: var(--mui-palette-createIssueHeader-text);
+  min-height: 36px;
+  padding: 0 16px;
+
+  &:hover,
+  &_active {
+    background: var(--mui-palette-background-defaultChannel);
+    color: var(--mui-palette-primary-main);
+    text-decoration: none;
+  }
+}
+
+.iconWrapper {
+  padding: 4px 8px 0 0;
+}
+
+.title {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.navigation {
+  padding: 4px;
+  border: 1px solid var(--mui-palette-adminSidebar-border);
+  max-height: 82vh;
+}
+
+.elements {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  padding: 10px 0 0 16px;
+  border: 1px solid var(--mui-palette-adminSidebar-border);
+  max-height: 82vh;
+  overflow-y: auto;  // Enables vertical scrolling
+}
+
+.elements::-webkit-scrollbar {
+  width: 10px !important;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--mui-palette-adminSidebar-border);
+}
