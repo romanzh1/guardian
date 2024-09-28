@@ -7,9 +7,11 @@ import (
 )
 
 type secureNoteRepository interface {
+	Create(ctx context.Context, secureNote models.EntireSecureNote) (string, error)
 	Read(ctx context.Context, id string) (models.EntireSecureNote, error)
 	Update(ctx context.Context, secureNote models.EntireSecureNote) (models.EntireSecureNote, error)
 	List(ctx context.Context) ([]models.SecureNote, error)
+	Delete(ctx context.Context, id string) error
 }
 
 type SecureNote struct {
@@ -18,6 +20,10 @@ type SecureNote struct {
 
 func NewSecureNote(repo secureNoteRepository) SecureNote {
 	return SecureNote{repo: repo}
+}
+
+func (u SecureNote) Create(ctx context.Context, secureNote models.EntireSecureNote) (string, error) {
+	return u.repo.Create(ctx, secureNote)
 }
 
 func (u SecureNote) Read(ctx context.Context, id string) (models.EntireSecureNote, error) {
@@ -30,4 +36,8 @@ func (u SecureNote) Update(ctx context.Context, secureNote models.EntireSecureNo
 
 func (u SecureNote) List(ctx context.Context) ([]models.SecureNote, error) {
 	return u.repo.List(ctx)
+}
+
+func (u SecureNote) Delete(ctx context.Context, id string) error {
+	return u.repo.Delete(ctx, id)
 }

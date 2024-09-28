@@ -82,3 +82,17 @@ func (r SecureNote) List(ctx context.Context) ([]models.SecureNote, error) {
 
 	return secureNotes, nil
 }
+
+func (r SecureNote) Delete(ctx context.Context, id string) error {
+	oID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return fmt.Errorf("object rom hex: %w", err)
+	}
+
+	_, err = r.db.db.Collection("secure_notes").DeleteOne(ctx, bson.M{"_id": oID})
+	if err != nil {
+		return fmt.Errorf("delete secure note: %w", err)
+	}
+
+	return nil
+}

@@ -10,9 +10,28 @@ import (
 )
 
 type secureNoteUseCase interface {
+	Create(ctx context.Context, secureNote models.EntireSecureNote) (string, error)
 	Read(ctx context.Context, id string) (models.EntireSecureNote, error)
 	Update(ctx context.Context, secureNote models.EntireSecureNote) (models.EntireSecureNote, error)
 	List(ctx context.Context) ([]models.SecureNote, error)
+	Delete(ctx context.Context, id string) error
+}
+
+func (h Handlers) CreateSecureNote(w http.ResponseWriter, r *http.Request) {
+	secureNote := models.EntireSecureNote{}
+
+	if err := render.DecodeJSON(r.Body, &secureNote); err != nil {
+		h.handleError(w, r, err)
+		return
+	}
+
+	id, err := h.secureNote.Create(r.Context(), secureNote)
+	if err != nil {
+		h.handleError(w, r, err)
+		return
+	}
+
+	render.JSON(w, r, id)
 }
 
 func (h Handlers) GetSecureNote(w http.ResponseWriter, r *http.Request) {
@@ -52,4 +71,13 @@ func (h Handlers) UpdateSecureNote(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.JSON(w, r, secureNote)
+}
+
+func (h Handlers) DeleteSecureNote(w http.ResponseWriter, r *http.Request) {
+	if err := h.secureNote.Delete(r.Context(), chi.URLParam(r, "id")); err != nil {
+		h.handleError(w, r, err)
+		return
+	}
+
+	render.JSON(w, r, nil)
 }
