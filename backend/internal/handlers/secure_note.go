@@ -22,12 +22,14 @@ func (h Handlers) CreateSecureNote(w http.ResponseWriter, r *http.Request) {
 
 	if err := render.DecodeJSON(r.Body, &secureNote); err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
 	id, err := h.secureNote.Create(r.Context(), secureNote)
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -38,6 +40,7 @@ func (h Handlers) GetSecureNote(w http.ResponseWriter, r *http.Request) {
 	secureNote, err := h.secureNote.Read(r.Context(), chi.URLParam(r, "id"))
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -48,6 +51,7 @@ func (h Handlers) GetSecureNotes(w http.ResponseWriter, r *http.Request) {
 	secureNotes, err := h.secureNote.List(r.Context())
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -61,12 +65,14 @@ func (h Handlers) UpdateSecureNote(w http.ResponseWriter, r *http.Request) {
 
 	if err := render.DecodeJSON(r.Body, &secureNote); err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
 	secureNote, err := h.secureNote.Update(r.Context(), secureNote)
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -76,6 +82,7 @@ func (h Handlers) UpdateSecureNote(w http.ResponseWriter, r *http.Request) {
 func (h Handlers) DeleteSecureNote(w http.ResponseWriter, r *http.Request) {
 	if err := h.secureNote.Delete(r.Context(), chi.URLParam(r, "id")); err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 

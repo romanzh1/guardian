@@ -74,7 +74,7 @@ func (u Account) formIcons(accounts []models.Account) {
 					continue
 				}
 
-				accounts[i].IconLink = fmt.Sprintf("%s/%s", accounts[i].Websites[0], icon)
+				accounts[i].IconLink = fmt.Sprintf("%s%s", accounts[i].Websites[0], icon)
 			}
 		}
 	}

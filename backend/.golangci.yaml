@@ -1,0 +1,112 @@
+run:
+  go: "1.23"
+  concurrency: 4
+  timeout: 5m
+  tests: true
+  modules-download-mode: readonly
+  allow-parallel-runners: false
+
+output:
+  formats:
+    - format: colored-line-number
+  print-issued-lines: false
+  print-linter-name: true
+  uniq-by-line: false
+  sort-results: false
+
+linters-settings:
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+    disabled-checks:
+      - hugeParam
+      - octalLiteral
+      - rangeValCopy
+      - whyNoLint
+  goimports:
+    local-prefixes: insert_project_name
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(insert_project_name)
+  gosec:
+    excludes:
+      - G108
+
+linters:
+  disable-all: true
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - typecheck
+    - unused
+    - asasalint
+    - asciicheck
+    - bidichk
+    - bodyclose
+    - contextcheck
+    - cyclop
+    - decorder
+    - dogsled
+    - dupl
+    - errchkjson
+    - errname
+    - errorlint
+    - exhaustive
+    - copyloopvar
+    - forbidigo
+    - gci
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - gocritic
+    - err113
+    - gofmt
+    - gofumpt
+    - goheader
+    - goimports
+    - mnd
+    - gomoddirectives
+    - gomodguard
+    - goprintffuncname
+    - gosec
+    - grouper
+    - importas
+    - maintidx
+    - makezero
+    - misspell
+    - nakedret
+    - nestif
+    - nilerr
+    - nilnil
+    - nlreturn
+    - noctx
+    - nolintlint
+    - nosprintfhostport
+    - paralleltest
+    - prealloc
+    - predeclared
+    - promlinter
+    - revive
+    - rowserrcheck
+    - sqlclosecheck
+    - tagliatelle
+    - tenv
+    - thelper
+    - tparallel
+    - unconvert
+    - unparam
+    - usestdlibvars
+    - wastedassign
+    - whitespace
+    - wsl
+    - lll

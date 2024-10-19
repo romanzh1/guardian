@@ -22,7 +22,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to initialize logger: %v", err)
 	}
-	defer logger.Sync()
+
+	defer logger.Sync() //nolint:errcheck
 
 	cfg, err := models.NewConfig()
 	if err != nil {
@@ -32,6 +33,9 @@ func main() {
 	ctx := context.Background()
 
 	mongoDB, err := repository.NewMongoDB(ctx, cfg.Mongo)
+	if err != nil {
+		zap.S().Fatalf("mongo connect: %s", err)
+	}
 
 	accountRepo := repository.NewAccount(mongoDB)
 	secureNoteRepo := repository.NewSecureNote(mongoDB)
@@ -59,6 +63,7 @@ func initLogger() (*zap.Logger, error) {
 	config := zap.NewDevelopmentConfig()
 	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	config.DisableStacktrace = true
+
 	logger, err := config.Build(zap.AddCaller())
 	if err != nil {
 		return nil, err

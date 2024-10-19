@@ -74,6 +74,7 @@ func (r User) List(ctx context.Context) ([]models.User, error) {
 	users := make([]models.User, 0)
 
 	opts := options.Find().SetSort(bson.M{"name": 1})
+
 	cursor, err := r.db.db.Collection("users").Find(ctx, bson.M{}, opts) // TODO add filters
 	if err != nil {
 		return []models.User{}, fmt.Errorf("find users: %w", err)

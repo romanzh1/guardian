@@ -13,6 +13,14 @@ import (
 	"go.uber.org/zap"
 )
 
+const (
+	corsMaxAgeInSec = 300
+	readTimeout     = 20 * time.Second
+	writeTimeout    = 20 * time.Second
+	maxHeaderBytes  = 1 << 20
+	shutdownTimeout = 9 * time.Second
+)
+
 type Handlers struct {
 	router     *chi.Mux
 	account    accountUseCase
@@ -31,7 +39,7 @@ func (h Handlers) AllowCORS() http.Handler {
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
 		AllowCredentials: true,
-		MaxAge:           300,
+		MaxAge:           corsMaxAgeInSec,
 	})
 
 	h.router.Use(corsMiddleware.Handler)
@@ -40,15 +48,15 @@ func (h Handlers) AllowCORS() http.Handler {
 }
 
 func (h Handlers) StartServe(ctx context.Context, cfg models.ServerConfig, quit chan os.Signal) {
-	ctxShutdown, cancel := context.WithTimeout(ctx, 5*time.Second)
+	ctxShutdown, cancel := context.WithTimeout(ctx, shutdownTimeout)
 	defer cancel()
 
 	server := &http.Server{
 		Addr:           ":" + cfg.Port,
 		Handler:        h.router,
-		ReadTimeout:    20 * time.Second,
-		WriteTimeout:   20 * time.Second,
-		MaxHeaderBytes: 1 << 20,
+		ReadTimeout:    readTimeout,
+		WriteTimeout:   writeTimeout,
+		MaxHeaderBytes: maxHeaderBytes,
 	}
 
 	go func() {

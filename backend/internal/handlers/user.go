@@ -22,12 +22,14 @@ func (h Handlers) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	if err := render.DecodeJSON(r.Body, &user); err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
 	id, err := h.user.Create(r.Context(), user)
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -38,6 +40,7 @@ func (h Handlers) GetUser(w http.ResponseWriter, r *http.Request) {
 	user, err := h.user.Read(r.Context(), chi.URLParam(r, "id"))
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -48,6 +51,7 @@ func (h Handlers) GetUsers(w http.ResponseWriter, r *http.Request) {
 	users, err := h.user.List(r.Context())
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -59,12 +63,14 @@ func (h Handlers) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	if err := render.DecodeJSON(r.Body, &user); err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
 	user, err := h.user.Update(r.Context(), user)
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 

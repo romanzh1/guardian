@@ -15,13 +15,11 @@ type DB struct {
 }
 
 func NewMongoDB(ctx context.Context, cfg models.MongoConfig) (DB, error) {
-	DSN := ""
+	DSN := fmt.Sprintf("mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority",
+		cfg.MongoUsername, cfg.MongoPassword, cfg.MongoHost, cfg.MongoDatabase)
 
 	if cfg.Environment == models.EnvironmentLocal {
 		DSN = fmt.Sprintf("mongodb://%s/%s", cfg.MongoHost, cfg.MongoDatabase)
-	} else {
-		DSN = fmt.Sprintf("mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority",
-			cfg.MongoUsername, cfg.MongoPassword, cfg.MongoHost, cfg.MongoDatabase)
 	}
 
 	zap.S().Infof("DSN: %s", DSN)

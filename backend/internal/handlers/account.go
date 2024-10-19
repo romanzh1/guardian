@@ -22,12 +22,14 @@ func (h Handlers) CreateAccount(w http.ResponseWriter, r *http.Request) {
 
 	if err := render.DecodeJSON(r.Body, &account); err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
 	id, err := h.account.Create(r.Context(), account)
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -38,6 +40,7 @@ func (h Handlers) GetAccount(w http.ResponseWriter, r *http.Request) {
 	account, err := h.account.Read(r.Context(), chi.URLParam(r, "id"))
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -48,6 +51,7 @@ func (h Handlers) GetAccounts(w http.ResponseWriter, r *http.Request) {
 	accounts, err := h.account.List(r.Context())
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -61,12 +65,14 @@ func (h Handlers) UpdateAccount(w http.ResponseWriter, r *http.Request) {
 
 	if err := render.DecodeJSON(r.Body, &account); err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
 	account, err := h.account.Update(r.Context(), account)
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
@@ -77,6 +83,7 @@ func (h Handlers) DeleteAccount(w http.ResponseWriter, r *http.Request) {
 	err := h.account.Delete(r.Context(), chi.URLParam(r, "id"))
 	if err != nil {
 		h.handleError(w, r, err)
+
 		return
 	}
 
